@@ -1,62 +1,45 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Redirecting...</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-family: sans-serif;
-      text-align: center;
-      cursor: pointer;
-    }
-    .button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <div id="step1">
-    <p>Clicca per aprire il primo link (Unibet)</p>
-  </div>
-  <div id="step2" style="display: none;">
-    <p>Ora clicca per aprire il secondo link (Sisal)</p>
-    <button class="button" id="openSecond">Apri il secondo link</button>
-  </div>
+  <head>
+    <title>Redirecting...</title>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: sans-serif;
+        text-align: center;
+        cursor: pointer;
+      }
+    </style>
+    <script>
+      function getParam(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+      }
 
-  <script>
-    function getParam(name) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(name);
-    }
+      window.onload = function () {
+        const url1 = getParam("u") || getParam("url1");
+        const url2 = getParam("s") || getParam("url2");
 
-    const url1 = getParam("u") || getParam("url1");
-    const url2 = getParam("s") || getParam("url2");
+        if (!url1 || !url2) {
+          document.body.innerHTML = "<p>Errore: parametri mancanti.</p>";
+          return;
+        }
 
-    const step1 = document.getElementById("step1");
-    const step2 = document.getElementById("step2");
-    const btnSecond = document.getElementById("openSecond");
+        document.body.addEventListener("click", function () {
+          // Apri la prima in una nuova scheda
+          window.open(url1, "_blank");
 
-    step1.addEventListener("click", () => {
-      if (url1) window.open(url1, "_blank");
-      step1.style.display = "none";
-      step2.style.display = "block";
-    });
-
-    btnSecond.addEventListener("click", () => {
-      if (url2) window.open(url2, "_blank");
-    });
-  </script>
-</body>
+          // Reindirizza la pagina attuale alla seconda
+          window.location.href = url2;
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <p>Clicca per aprire entrambi i link</p>
+  </body>
 </html>
