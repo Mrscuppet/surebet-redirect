@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Redirecting...</title>
+    <script>
+      function getParam(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+      }
+
+      window.onload = function () {
+        const url1 = getParam("u");
+        const url2 = getParam("s");
+
+        const messageEl = document.getElementById('message');
+
+        if (url1 || url2) {
+          messageEl.textContent = "Stai per essere reindirizzato...";
+          if (url1) window.open(url1, "_blank");
+          if (url2) window.open(url2, "_blank");
+        } else {
+          messageEl.textContent = "Nessun link di destinazione trovato.";
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <p id="message">Caricamento...</p>
+  </body>
+</html>
